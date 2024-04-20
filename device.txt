@@ -1,0 +1,2 @@
+Device name: hhgh | Device type: normal | Device status: used | Device usage time in years: 3 | Device description: kklklkklkk ylktylk lklk
+Device name: gfg | Device type: normal | Device status: used | Device usage time in years: 13 | Device description: fefe
