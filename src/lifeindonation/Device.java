@@ -16,7 +16,7 @@ class device {
     static Connection D_Connection; 
     static Connection o_Connection; 
     static Statement statement;
-    DataBase conn = new DataBase();
+    DataBase conn = DataBase.getInstance();
     static String query;
     
     private String name, status, type,description;
