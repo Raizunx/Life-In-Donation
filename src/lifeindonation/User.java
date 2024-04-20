@@ -22,7 +22,7 @@ public class User {
     static Connection PiN_Connection; 
     static Connection donor_Connection; 
     static Statement statement;
-    DataBase conn = new DataBase();
+    DataBase conn = DataBase.getInstance();
     static String query;
     
     ////////////////////////////consturctors////////////////////////////

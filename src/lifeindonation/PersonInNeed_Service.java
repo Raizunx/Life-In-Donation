@@ -21,7 +21,7 @@ public class PersonInNeed_Service {
         static Statement ss;
         static String query;
         static Connection c,cn;
-        DataBase conn = new DataBase();
+        DataBase conn = DataBase.getInstance();
         int id;
         
 //////////////////////////////////consturctors//////////////////////////////////

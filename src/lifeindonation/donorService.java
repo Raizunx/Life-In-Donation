@@ -20,7 +20,7 @@ public class donorService {
         static Statement ss;
         static String query;
         static Connection c;
-        DataBase conn = new DataBase();
+        DataBase conn = DataBase.getInstance();
 //////////////////////////////////consturctors//////////////////////////////////
         //1
         public donorService(){
@@ -96,7 +96,7 @@ public class donorService {
         System.out.println("-------------------------------------------------");
         System.out.println("List Of device Needed: ");
         
-        DataBase conn = new DataBase();
+        DataBase conn = DataBase.getInstance();
         try{
             c = conn.connect();
             ss = c.createStatement();
