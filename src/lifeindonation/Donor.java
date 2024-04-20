@@ -19,7 +19,6 @@ public class Donor extends User{
         super(id,FN,MN,SN,phone,address,email);
         add_donor_ToDataBase();
         this.id = id;
-        displayService();
     }
     //2
     public Donor(){

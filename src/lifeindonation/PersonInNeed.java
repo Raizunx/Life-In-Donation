@@ -34,7 +34,6 @@ public class PersonInNeed extends User{
         super(id,FN,MN,SN,phone,address,email);
         add_Pin_ToDataBase();
         this.id = id;
-        displayService();
     }
     
     
