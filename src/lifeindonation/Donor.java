@@ -10,7 +10,7 @@ class to implements their requests.
 
 public class Donor extends User{
     
-    donorService service= new donorService();
+    donorServiceInterface service = new donorServiceProxy(this.id);
     
     ////////////////////////////consturctors////////////////////////////
     //1
@@ -20,9 +20,10 @@ public class Donor extends User{
         add_donor_ToDataBase();
         this.id = id;
     }
+    
     //2
     public Donor(){
-        System.out.println("detail of Donor not sent.");
+        System.out.println("user (donor) information not sent.");
     }
     
     
@@ -67,7 +68,7 @@ public class Donor extends User{
                 break;
             
             case 2:
-                service.DetailOfDonate(id);
+                service.DetailOfDonate();
                 break; 
         
             case 3:

@@ -5,7 +5,6 @@ donorService class provide service for donor.
 the service: 
 1- take a Detail of Donate 
 2- List Of Need 
-3- search 
 */
 
 import java.sql.Connection;
@@ -14,83 +13,62 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class donorService {
+public class donorService implements donorServiceInterface{
         Scanner input = new Scanner(System.in); 
         static ResultSet r;
         static Statement ss;
         static String query;
         static Connection c;
         DataBase conn = DataBase.getInstance();
+        String[] elements = new String[7] ;
+        
 //////////////////////////////////consturctors//////////////////////////////////
         //1
         public donorService(){
         }
         //2
         public donorService(ResultSet r, Statement ss, String query, 
-                Connection c, DataBase conn){
-        this.r = r;
-        this.ss = ss;
-        this.query = query;
-        this.c = c;
-        this.conn = conn;
+            Connection c, DataBase conn){
+            this.r = r;
+            this.ss = ss;
+            this.query = query;
+            this.c = c;
+            this.conn = conn;
         }
+        //3
     
         
 ////////////////////////////////donor service///////////////////////////////////
     
     //1 (Detail of Donate)
-    public void DetailOfDonate(int id){
-        int duration = 0;
-        String line;
-        
+    public void saveDonateDeviceInArray(String name,String status,
+            String type,int duration, String description,int id, 
+            int numberOfDevices){
+        elements[0]=name;
+        elements[1]=status;
+        elements[2]=type;
+        elements[3]=Integer.toString(duration);
+        elements[4]=description;
+        elements[5] = Integer.toString(id);
+        elements[6]= Integer.toString(numberOfDevices);
+    }
+    
+    public void DetailOfDonate(){
+        device device = new device(elements[0], elements[1], elements[2],
+                Integer.valueOf(elements[3]), elements[4], 
+                Integer.valueOf(elements[5]), 
+                Integer.valueOf(elements[6]));
         try{
-        //1
-        line = input.nextLine();
-        System.out.print("\nEnter the name of the device: ");
-        String name = input.nextLine();
-        
-        //2
-        System.out.print("Device status (used or new):");
-        String status = input.nextLine();
-        while(!status.equalsIgnoreCase("used") && !status.equalsIgnoreCase("new")){
-            System.out.print("!!try again!! \nDevice status (used or new):");
-            status = input.nextLine();
-        }
-        //3
-        if(status.equalsIgnoreCase("used")){
-            System.out.print("Device usage time in month: ");
-            duration = input.nextInt();
-            line = input.nextLine();
-        }
-        //4
-        System.out.print("Device type (electronic or normal): ");
-        String type = input.next();
-        
-        //5
-        System.out.print("number of Devices: ");
-        int nn = input.nextInt();
-        //6
-        System.out.print("Device description: ");
-        String description = input.next();
-        
-        //========================================//
-        
-        device d = new device(name, status, type, duration, description, id, nn);
-        
-        try{
-            d.create_donated_devices_table();
-            d.add_donated_device();
-            
+            device.create_donated_devices_table();
+            device.add_donated_device();
         }catch(Exception e){
-            System.out.println("\nThere was an error. Try later");
-        }
-        }catch(Exception e){
-            System.out.println("\nThere was an error. Try later");
-        }
-        
+            System.out.println("\nThere was an error in donorService class "
+                    + "at addDetailOfDonateDeviceToDatabase method . Try later");
+        }   
     }
     
     //2 (List Of Need)
+    @Override
     public void ListOfNeed(){
         
         System.out.println("-------------------------------------------------");
@@ -115,9 +93,9 @@ public class donorService {
             }
            
             
-            
         }catch(SQLException e){
             System.out.println(e.getMessage());
+            System.out.println("error in ListOfNeed method at donorService class");
         }finally{
             try{
                 c.close();
