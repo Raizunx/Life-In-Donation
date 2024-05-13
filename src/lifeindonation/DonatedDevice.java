@@ -3,7 +3,8 @@ package lifeindonation;
 import java.sql.*;
 
 public class DonatedDevice implements DeviceFlyweightInterface {
-    DataBase conn = DataBase.getInstance();
+    Mediator mediator = new Mediator();
+    Connection conn;
     
     //avalabel device
     @Override
@@ -11,7 +12,8 @@ public class DonatedDevice implements DeviceFlyweightInterface {
         Statement statement;
         Connection connection1;
        try{
-            connection1 = conn.connect();
+            conn= mediator.reactOnDataBase();
+            connection1 = conn;
             statement = connection1.createStatement();
             String query = "select * from donated_devices";
             ResultSet resultSet = statement.executeQuery(query);

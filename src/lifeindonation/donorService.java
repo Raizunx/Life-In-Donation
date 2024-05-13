@@ -12,7 +12,8 @@ import java.util.HashSet;
 import java.util.Random;
 
 public class donorService implements donorServiceInterface{ 
-        DataBase conn = DataBase.getInstance();
+        Mediator mediator = new Mediator();
+        Connection conn;
         String[] elements = new String[7] ;
         
 ////////////////////////////////donor service///////////////////////////////////
@@ -39,7 +40,8 @@ public class donorService implements donorServiceInterface{
                int random=r.nextInt(99)+10;
                set.add(random);
             }
-            Connection D_Connection = conn.connect(); 
+            conn= mediator.reactOnDataBase();
+            Connection D_Connection = conn; 
             Statement statement = D_Connection.createStatement(); 
             for(int count:set){
                 String query ="insert into donated_devices values("

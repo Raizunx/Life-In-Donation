@@ -22,7 +22,8 @@ public class User {
     static Connection PiN_Connection; 
     static Connection donor_Connection; 
     static Statement statement;
-    DataBase conn = DataBase.getInstance();
+    Mediator mediator = new Mediator();
+    Connection conn;
     static String query;
     
     ////////////////////////////consturctors////////////////////////////
@@ -34,7 +35,7 @@ public class User {
     //2 
     public User(int id,String FN,String MN,String SN,int phone,String address,String email,
     Connection PiN_Connection, Connection donor_Connection, Statement statement,
-    DataBase conn, String query)
+    Connection conn, String query)
     {
         this.id=id;
         this.first_name=FN;
@@ -117,7 +118,8 @@ public class User {
         
         try
         {  
-            PiN_Connection = conn.connect(); 
+            conn= mediator.reactOnDataBase();
+            PiN_Connection = conn; 
             statement = PiN_Connection.createStatement(); 
             
             query = "create table person_in_need(" 
@@ -151,7 +153,8 @@ public class User {
         
         try
         {  
-            donor_Connection = conn.connect(); 
+            conn= mediator.reactOnDataBase();
+            donor_Connection = conn; 
             statement = donor_Connection.createStatement(); 
             
              query =  "create table donor(" 
@@ -193,7 +196,8 @@ public class User {
         
         try
         {  
-        PiN_Connection = conn.connect(); 
+        conn= mediator.reactOnDataBase();
+        PiN_Connection = conn; 
         
         statement =PiN_Connection.createStatement(); 
         String query ="insert into person_in_need values("
@@ -225,7 +229,8 @@ public class User {
         
         try
         {  
-        donor_Connection = conn.connect(); 
+        conn= mediator.reactOnDataBase();
+        donor_Connection = conn; 
         
         statement =donor_Connection.createStatement(); 
         String query ="insert into donor values("

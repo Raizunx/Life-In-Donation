@@ -17,7 +17,8 @@ import java.util.Scanner;
 public class PersonInNeed_Service {
     
         Scanner input = new Scanner(System.in);
-        DataBase DataBaseConnection = DataBase.getInstance();
+        Mediator mediator = new Mediator();
+        Connection conn;
         int id;
         
 //////////////////////////////////consturctors//////////////////////////////////
@@ -25,8 +26,8 @@ public class PersonInNeed_Service {
         public PersonInNeed_Service(){}
         
         //2
-        public PersonInNeed_Service(DataBase conn, int id){
-            this.DataBaseConnection = conn;
+        public PersonInNeed_Service(Connection conn, int id){
+            this.conn = conn;
             this.id = id;
         }
     
@@ -60,7 +61,8 @@ public class PersonInNeed_Service {
             description = input.nextLine(); 
             try
             {  
-                Connection N_Connection = DataBaseConnection.connect(); 
+                conn= mediator.reactOnDataBase();
+                Connection N_Connection = conn; 
                 Statement statement =N_Connection.createStatement(); 
                 String query ="insert into needed_devices values("
                     + "'"+id+"',"
@@ -99,8 +101,8 @@ public class PersonInNeed_Service {
         Connection connection1;
         
         try{
-            connection1 = DataBaseConnection.connect();
-            statement = connection1.createStatement();
+            conn= mediator.reactOnDataBase();
+            statement = conn.createStatement();
             String query = "select * from donated_devices WHERE Device_name Like'"+search+"'";
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
@@ -114,7 +116,7 @@ public class PersonInNeed_Service {
                 System.out.println("-------------------------------------------------");
             }
             try{
-                connection1.close();
+                conn.close();
                 statement.close();
             }catch(SQLException e2){
                 System.out.println(e2.getMessage());
@@ -125,16 +127,16 @@ public class PersonInNeed_Service {
     }
     
 ///////////////////////////////set & get methods////////////////////////////////
-    public void setDataBaseConnection (DataBase con){
-        this.DataBaseConnection = con;
+    public void setDataBaseConnection (Connection con){
+        this.conn = con;
     }
     public void setID (int id){
         this.id = id;
     }
     
     
-    public DataBase getDataBaseConnection (){
-        return DataBaseConnection;
+    public Connection getDataBaseConnection (){
+        return conn;
     }
     public int getID (){
         return id;

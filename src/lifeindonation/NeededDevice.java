@@ -3,15 +3,17 @@ package lifeindonation;
 import java.sql.*;
 
 public class NeededDevice implements DeviceFlyweightInterface {
-    DataBase conn = DataBase.getInstance();
+    Mediator mediator = new Mediator();
+    Connection conn;
     
     //disply needed device.
     @Override
     public void deviceList(){
-        DataBase conn = DataBase.getInstance();
+        
         
         try{
-            Connection c = conn.connect();
+            conn= mediator.reactOnDataBase();
+            Connection c = conn;
             Statement ss = c.createStatement();
             
             String query = "select * from needed_devices";
